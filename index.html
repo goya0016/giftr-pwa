@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giftr-Pwa</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link rel="stylesheet" href="./css/main.css">
+ <!-- <link rel="manifest" href="manifest.json" /> -->
+    <meta name="theme-color" content="#bada55" />
+</head>
+<body>
+    <nav  class="teal">
+        <div class="nav-wrapper">
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <a href="#" class="brand-logo">Logo</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="" class = "modal-trigger" data-target="modal2">Login</a></li>
+                <li><a href="" class = "modal-trigger" data-target="modal3">Register</a></li>
+            </ul>
+        </div>
+    </nav>
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="" class="modal-trigger" data-target="modal2">Login</a></li>
+        <li><a href="" class="modal-trigger" data-target="modal3">Register</a></li>
+    </ul>
+<section id="peoplepage">
+    <ul class="collection with-header" id="peoplelist">
+        <li class="collection-header" id="ulheader">
+            <h4>People</h4>
+        </li>
+        
+       
+    </ul>
+    
+    <div class="fixed-action-btn">
+    <a class="btn-floating btn-large teal modal-trigger"id="addbtn" data-target="modal1">
+            <i class="large material-icons">add</i>
+        </a> 
+    </div>
+</section>
+
+
+
+
+
+<section id="models">
+
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="input-field col s6">
+                <label for="personName">Name</label>
+                <input id="personName" type="text" class="validate">
+            </div>
+            <div class="input-field col s6">
+                <label for="date">Birth Date</label>
+                <input id="date" type="text" class="datepicker">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn">Add</a>
+        </div>
+    </div>
+    
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn">Sign in</a>
+        </div>
+    </div>
+    </div>
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="input-field col s6">
+                <input id="first_name" type="text" class="validate">
+                <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="last_name" type="text" class="validate">
+                <label for="last_name">Last Name</label>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<template id="listitem">
+    <li class="collection-item">
+        <div>Alvin<a href="#!" class="secondary-content"><i class="material-icons">delete</i></a></div>
+    </li>
+</template>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
