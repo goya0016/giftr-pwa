@@ -14,10 +14,11 @@
     <nav  class="teal">
         <div class="nav-wrapper">
             <!-- <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
-            <a href="#" class="brand-logo left">Logo</a>
+            <a href="#" class="brand-logo left">Giftr</a>
             <ul id="nav-mobile" class="right">
-                <li><a href="" class = "modal-trigger" data-target="modal2">Login</a></li>
-                <li><a href="" class = "modal-trigger" data-target="modal3">Register</a></li>
+                <li><a href="" class = "modal-trigger" data-target="modal2" id="login">Login</a></li>
+                <li><a href="" class = "modal-trigger" data-target="modal3" id="register">Register</a></li>
+                <li><a href="" class = "scale-out scale-transition" data-target="" id="logout">Logout</a></li>
                 <!-- <li><a href="" class="">Logout</a></li> -->
             </ul>
         </div>
@@ -33,12 +34,11 @@
         <li class="collection-header" id="ulheader">
             <h4>People</h4>
         </li>
-        <!-- <li class="collection-item">
+        <li class="collection-item" id="beforelogin">
         <div id="lidiv">
-            <span id="dob"></span><span id="pName"></span>Alvin<a href="#!" class="secondary-content"><i
-                    class="material-icons">delete</i></a>
+           You are currently not logged in into the system. Please login to continue.
         </div>
-        </li> -->
+        </li>
        
     </ul>
     
@@ -57,14 +57,17 @@
 
     <div id="modal1" class="modal">
         <div class="modal-content">
-            <div class="input-field col s6">
-                <label for="personName">Name</label>
-                <input id="personName" type="text" class="validate">
-            </div>
-            <div class="input-field col s6">
-                <label for="date">Birth Date</label>
-                <input id="date" type="text" class="datepicker">
-            </div>
+            <form id="addp">
+
+                <div class="input-field col s6">
+                    <label for="personName">Name</label>
+                    <input id="personName" type="text" class="validate">
+                </div>
+                <div class="input-field col s6">
+                    <label for="date">Birth Date</label>
+                    <input id="date" type="text" class="datepicker">
+                </div>
+            </form>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn" id="cancel">Cancel</a>    <!-- modal-close-->
@@ -74,70 +77,72 @@
     
     <div id="modal2" class="modal">
         <div class="modal-content">
+            <form id="signin">
+            <div class="row">
+                    <div class="input-field col s12">
+                        <input id="loginemail" type="email" class="validate">
+                        <label for="loginemail">Email</label>
+                    </div>
+                </div>
+                <section id="spinners">
+                
+                    <div class="preloader-wrapper medium">
+                        <div class="spinner-layer spinner-blue">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                
+                        <div class="spinner-layer spinner-red">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                
+                        <div class="spinner-layer spinner-yellow">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                
+                        <div class="spinner-layer spinner-green">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="loginemail" type="email" class="validate">
-                    <label for="loginemail">Email</label>
+                    <input id="loginpassword" type="password" class="validate">
+                    <label for="loginpassword">Password</label>
                 </div>
             </div>
-            <section id="spinners">
-            
-                <div class="preloader-wrapper medium">
-                    <div class="spinner-layer spinner-blue">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-            
-                    <div class="spinner-layer spinner-red">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-            
-                    <div class="spinner-layer spinner-yellow">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-            
-                    <div class="spinner-layer spinner-green">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        <div class="row">
-            <div class="input-field col s12">
-                <input id="loginpassword" type="password" class="validate">
-                <label for="loginpassword">Password</label>
-            </div>
-        </div>
+                </form>
         <div class="modal-footer">
             <a href="#!" class="waves-effect waves-green btn" id="signInbtn">Sign in</a><!-- modal-close-->
         </div>
@@ -148,26 +153,81 @@
 
     <div id="modal3" class="modal">
         <div class="modal-content">
-            <div class="input-field col s6">
-                <input id="first_name" type="text" class="validate">
-                <label for="first_name">First Name</label>
-            </div>
-            <div class="input-field col s6">
-                <input id="last_name" type="text" class="validate">
-                <label for="last_name">Last Name</label>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="email" type="email" class="validate">
-                    <label for="email">Email</label>
+            <form id="signup">
+
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" class="validate">
+                    <label for="first_name">First Name</label>
                 </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <input id="password" type="password" class="validate">
-                    <label for="password">Password</label>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
                 </div>
-            </div>
+                <section id="spen">
+                
+                    <div class="second preloader-wrapper medium">
+                        <div class="spinner-layer spinner-blue">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                
+                        <div class="spinner-layer spinner-red">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                
+                        <div class="spinner-layer spinner-yellow">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                
+                        <div class="spinner-layer spinner-green">
+                            <div class="circle-clipper left">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="gap-patch">
+                                <div class="circle"></div>
+                            </div>
+                            <div class="circle-clipper right">
+                                <div class="circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="email" type="email" class="validate">
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input id="password" type="password" class="validate">
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+            </form>
             <div class="modal-footer">
                 <a href="#!" class="waves-effect waves-green btn" id="signup">Sign up</a><!-- modal-close-->
             </div>

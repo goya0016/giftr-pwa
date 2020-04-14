@@ -16,7 +16,7 @@
             app.modals=modals;
 
             let datepicker = document.querySelectorAll('.datepicker');
-            let datepickers = M.Datepicker.init(datepicker);
+            let datepickers = M.Datepicker.init(datepicker,modoptions);
 
             app.addEventListeners();
         },
@@ -25,11 +25,14 @@
             document.getElementById('cancel').addEventListener('click',app.cancel);
             document.getElementById('addPerson').addEventListener('click',app.addPerson);
             document.getElementById('signup').addEventListener('click',app.signup);
+            document.getElementById('logout').addEventListener('click',app.logout);
         },
         signin:(ev)=>{
             ev.preventDefault();
             console.log('signin')
             document.querySelector('.preloader-wrapper').classList.add('active');
+
+
             let email = document.getElementById('loginemail').value;
             let password = document.getElementById('loginpassword').value;
 
@@ -54,27 +57,42 @@
 
             if(email!=""&&password!=""){
                 console.log('empty')
+
+                fetch(req)
+                    .then(response => response.json())
+                    .then(data=>{
+                        console.log(data.data.token)
+                        app.token=data.data.token;
+                        console.log(app.token);
+    
+    
+                        sessionStorage.setItem("token",JSON.stringify(app.token));
+                        document.querySelector('.preloader-wrapper').classList.remove('active');
+
+                        document.getElementById("signin").reset();
+
+                        app.modals[1].close();
+
+                        document.querySelector('.scale-out').classList.add('scale-in');
+
+                        let li = document.getElementById("beforelogin")
+                        li.parentNode.removeChild(li)
+
+                        document.getElementById('logout').classList.add('scale-in');
+                        document.getElementById('login').classList.add('scale-out',"scale-transition");
+                        document.getElementById('register').classList.add('scale-out',"scale-transition");
+                        app.showpeople();
+                    })
+                    .catch(err=>{
+                        console.error(err);
+                        document.querySelector('.preloader-wrapper').classList.remove('active');
+                        alert('Your email or password is incorrect. Please check and try again')
+    
+                    })
+            }else{
+                document.querySelector('.preloader-wrapper').classList.remove('active');
+                alert("One of the required fields is empty. Please check and try again")
             }
-            fetch(req)
-                .then(response => response.json())
-                .then(data=>{
-                    console.log(data.data.token)
-                    app.token=data.data.token;
-                    console.log(app.token);
-
-
-                    sessionStorage.setItem("token",JSON.stringify(app.token));
-                    document.querySelector('.preloader-wrapper').classList.remove('active');
-                    app.modals[1].close();
-                    document.querySelector('.scale-out').classList.add('scale-in');
-                    app.showpeople();
-                })
-                .catch(err=>{
-                    console.error(err);
-                    document.querySelector('.preloader-wrapper').classList.remove('active');
-                    alert('Your email or password is incorrect. Please check and retry again')
-
-                })
 
 
         },
@@ -116,6 +134,7 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
+                    document.getElementById("addp").reset();
                     app.modals[0].close();
                     app.showpeople();
                 })
@@ -125,6 +144,9 @@
         signup: (ev) => {
              ev.preventDefault();
             console.log('signup')
+
+            document.querySelector('.second').classList.add('active');
+
             let firstName = document.getElementById('first_name').value;
             let lastName = document.getElementById('last_name').value;
             let email = document.getElementById('email').value;
@@ -152,17 +174,39 @@
                 method: 'POST'
             });
 
-            fetch(req)
-            .then(response=>response.json())
-            .then(
-                data=>{console.log(data)
-                    app.modals[2].close();
+            if(firstName!=""&&lastName!=""&&email!=""&&password!=""){
+                fetch(req)
+                .then(response=>response.json())
+                .then(
+                    data=>{console.log(data)
+
+                        if(data.errors){
+                            console.log(data.errors)
+                            alert(data.errors[0].detail) 
+
+                        }else{
+                            document.querySelector('.second').classList.remove('active');
+                            document.getElementById("signup").reset();
+                            app.modals[2].close();
+
+                        }
+
+
+                    })
+                .catch(err=>{
+                    console.error(err)
+                    document.querySelector('.second').classList.remove('active');
+                    alert("Email is already registered. Please login or try another email")
                 })
-            .catch(console.error)
+
+            }else{
+                document.querySelector('.second').classList.remove('active');
+                alert("One of the required fields is empty. Please check and try again")
+            }
             },
 
 
-            showpeople:()=>{
+        showpeople:()=>{
                 let uri = "https://giftr.mad9124.rocks/api/people";
 
                 let header = new Headers();
@@ -186,7 +230,7 @@
 
                             console.log(data.data)
 
-                            app.peoplelist.sort(function(a,b){return new Date(a.birthDate) - new Date(b.birthDate)})
+                            app.peoplelist.sort(function (a, b) { return new Date(a.birthDate.slice(5, 10)) - new Date(b.birthDate.slice(5, 10))})
 
 
                             
@@ -252,6 +296,7 @@
                         })
                     .catch(console.error)
             },
+
             deletePerson:(ev)=>{
                 ev.stopImmediatePropagation();
                 ev.preventDefault();
@@ -259,6 +304,12 @@
             retrieveID:(ev)=>{
                 let target = ev.target;
                 // let clicked = target.close
+            },
+            logout:(ev)=>{
+            ev.preventDefault();
+            sessionStorage.removeItem("token");
+            
+            location.reload();
             }
     }
     

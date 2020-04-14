@@ -16,6 +16,12 @@
 .modal{
     text-align: center;
 }
+#logout.scale-out.scale-transition{
+    position: absolute;;
+}
+#logout.scale-out.scale-transition.scale-in{
+    position: relative;;
+}
 @media screen and(min-width:800px){
     .preloader-wrapper.medium.active{
     position: absolute;
