@@ -29,7 +29,7 @@
         signin:(ev)=>{
             ev.preventDefault();
             console.log('signin')
-
+            document.querySelector('.preloader-wrapper').classList.add('active');
             let email = document.getElementById('loginemail').value;
             let password = document.getElementById('loginpassword').value;
 
@@ -52,9 +52,9 @@
                 method: 'POST'
             });
 
-            // if(email!=""&&password!=""){
-            //     console.log('empty')
-            // }
+            if(email!=""&&password!=""){
+                console.log('empty')
+            }
             fetch(req)
                 .then(response => response.json())
                 .then(data=>{
@@ -63,16 +63,19 @@
                     console.log(app.token);
 
 
-                    sessionStorage.setItem("token",JSON.stringify(app.token))
+                    sessionStorage.setItem("token",JSON.stringify(app.token));
+                    document.querySelector('.preloader-wrapper').classList.remove('active');
                     app.modals[1].close();
                     document.querySelector('.scale-out').classList.add('scale-in');
                     app.showpeople();
                 })
                 .catch(err=>{
                     console.error(err);
+                    document.querySelector('.preloader-wrapper').classList.remove('active');
                     alert('Your email or password is incorrect. Please check and retry again')
 
                 })
+
 
         },
         cancel: (ev) => { 
