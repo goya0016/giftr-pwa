@@ -163,7 +163,7 @@ const gift={
 
                             name.setAttribute('id', 'gName')
                             strname.setAttribute('class','center-align')
-
+                            price.setAttribute('class', 'black-text')
                             i.setAttribute('class', "material-icons")
                             del.setAttribute('class', 'secondary-content')
                             del.addEventListener('click',gift.deleteGift);
@@ -171,7 +171,7 @@ const gift={
                             // let part = element.birthDate.split('T') part[0]=2020-04-03
 
                             name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
-                            price.textContent = "$ "+element.price;
+                            price.textContent = "$ "+element.price+"   ";
                             strname.textContent=    element.store.name;
 
 

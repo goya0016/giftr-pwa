@@ -299,12 +299,21 @@ const app={
     
                                     name.setAttribute('id','pName')
                                     dob.setAttribute('id','dob')
-    
+                                    dob.setAttribute('class','black-text')
                                     i.setAttribute('class',"material-icons")
                                     del.setAttribute('class','secondary-content')
+
+                                    
                                     del.addEventListener('click',app.deletePerson)
                                     // let part = element.birthDate.split('T') part[0]=2020-04-03
                                     let date = new Date(element.birthDate)
+
+
+                                    if (Date.parse(date)<Date.now()){
+                                        li.classList.add('disabled')
+                                    }
+
+
                                     let birthDate = date.getUTCDate();
                                     let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', "Dec"]
                                     let month = months[date.getUTCMonth()]

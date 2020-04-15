@@ -25,6 +25,9 @@
 #modal1.hiet{
     height:500px
 }
+li.collection-item.disabled{
+    background-color: hsl(0, 0%, 90%);
+}
 @media screen and(min-width:800px){
     .preloader-wrapper.medium.active{
     position: absolute;
