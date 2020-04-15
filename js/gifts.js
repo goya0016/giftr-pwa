@@ -41,7 +41,56 @@ const gift={
         location.href="./index.html";
     },
 
+    addGift: (ev) => {
+        ev.preventDefault();
+        let id = JSON.parse(sessionStorage.getItem("personID"))
+        gift.id = id;
+        console.log(gift.id);
+        let uri = "https://giftr.mad9124.rocks/api/people/" + gift.id + "/gifts";
+        console.log(uri)
+        let name = document.getElementById('itemName').value;
+        let price = document.getElementById('price').value;
+        let storeName = document.getElementById('storeName').value;
+        let url = document.getElementById('storeUrl').value;
 
+        // console.log(name.length())
+        console.log(name.length)
+        console.log(price)
+        console.log(storeName.length)
+        console.log(storeUrl.length)
+
+
+        let body = { id: Date.now(), name: name, price: price, store: { name: storeName, storeUrl: url } }
+
+        let header = new Headers();
+        header.append("Content-Type", "application/json")
+        header.append("Authorization", "Bearer " + gift.token)
+        console.log(gift.token)
+        // console.log(JSON.stringify(body))
+
+        let req = new Request(uri, {
+            headers: header,
+            body: JSON.stringify(body),
+            mode: 'cors',
+            method: 'POST'
+        });
+
+        if (name.length >= 3 && price >= 100) {
+            fetch(req)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    gift.modal[0].close();
+                    document.querySelector('#giftForm').reset();
+                    gift.showGifts();
+                })
+
+        } else if (name.length < 3) {
+            alert("Length of name is less than 3 characters")
+        } else if (price < 100) {
+            alert("Price less than 100")
+        }
+    },
 
     showGifts:()=>{
 
@@ -101,28 +150,29 @@ const gift={
                             // let div2 = document.createElement('div')
                             let name = document.createElement('h6');
                             let price = document.createElement('a');
-                            // let strname = document.createElement('a');
+                            let strname = document.createElement('span');
                             // let url = document.createElement('a');
 
                             let del = document.createElement('a');
                             let i = document.createElement('i');
 
-                            li.setAttribute('data-gift-d', element._id)
+                            li.setAttribute('data-gift-id', element._id)
                             li.setAttribute('class', 'collection-item');
                             // li.addEventListener('click', app.retrieveID)
                             div.setAttribute('id', 'lidiv')
 
                             name.setAttribute('id', 'gName')
-
+                            strname.setAttribute('class','center-align')
 
                             i.setAttribute('class', "material-icons")
                             del.setAttribute('class', 'secondary-content')
+                            del.addEventListener('click',gift.deleteGift);
                             // del.addEventListener('click', app.deletePerson)
                             // let part = element.birthDate.split('T') part[0]=2020-04-03
 
                             name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
-                            price.textContent = element.price;
-                            // strname.textContent=
+                            price.textContent = "$ "+element.price;
+                            strname.textContent=    element.store.name;
 
 
                             i.textContent = 'delete';
@@ -130,7 +180,8 @@ const gift={
                             li.appendChild(div)
                             div.appendChild(name);
                             name.insertAdjacentElement("afterend",price)
-                            price.insertAdjacentElement('afterend', del);
+                            price.insertAdjacentElement('afterend', strname);
+                            strname.insertAdjacentElement("afterend",del)
                             del.appendChild(i);
                             ul.appendChild(li);
 
@@ -146,58 +197,44 @@ const gift={
 
             })
     },
+    deleteGift:(ev)=>{
+        ev.preventDefault();
+        ev.stopImmediatePropagation();
+        let target = ev.target;
+
+        let click = target.closest("[data-gift-id");
+
+        let id = click.getAttribute('data-gift-id');
 
 
 
-
-    addGift:(ev)=>{
-    ev.preventDefault();
-        let id = JSON.parse(sessionStorage.getItem("personID"))
-        gift.id = id;
-        console.log(gift.id);
-        let uri = "https://giftr.mad9124.rocks/api/people/" + gift.id+"/gifts";
-        console.log(uri)
-        let name = document.getElementById('itemName').value;
-        let price = document.getElementById('price').value;
-        let storeName = document.getElementById('storeName').value;
-        let url = document.getElementById('storeUrl').value;
-
-        // console.log(name.length())
-        console.log(name.length)
-        console.log(price)
-        console.log(storeName.length)
-        console.log(storeUrl.length)
-
-
-        let body ={id:Date.now(),name:name,price:price,storeName:storeName,storeUrl:url}
+        let uri = "https://giftr.mad9124.rocks/api/people/" + gift.id+"/gifts/"+id;
 
         let header = new Headers();
         header.append("Content-Type", "application/json")
         header.append("Authorization", "Bearer " + gift.token)
-        console.log(gift.token)
+        // console.log(gift.token)
         // console.log(JSON.stringify(body))
 
         let req = new Request(uri, {
             headers: header,
-            body:JSON.stringify(body),
             mode: 'cors',
-            method: 'POST'
+            method: 'DELETE'
         });
 
-        if(name.length>=3 && price>=100){
-            fetch(req)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    gift.modal[0].close();
-                    gift.showGifts();
-                })
+        fetch(req)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                gift.showGifts();
+            })
 
-        }else if(name.length<3){
-            alert("Length of name is less than 3 characters")
-        }else if(price<100){
-            alert("Price less than 100")
-        }
+
     }
+
+
+
+
+    
 }
 document.addEventListener('DOMContentLoaded',gift.init())

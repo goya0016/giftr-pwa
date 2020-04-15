@@ -13,7 +13,6 @@ const app={
                 outDuration: 200
             }
             let modals = M.Modal.init(modal, modoptions);
-            console.log(modals);
 
             app.modals=modals;
 
@@ -29,7 +28,7 @@ const app={
             if(!token){
 
             }else{
-
+                document.querySelector('.fixed-action-btn').classList.add('scale-in');
                 document.getElementById('logout').classList.add('scale-in');
                 document.getElementById('login').classList.add('scale-out', "scale-transition");
                 document.getElementById('register').classList.add('scale-out', "scale-transition");
@@ -46,7 +45,7 @@ const app={
         },
         signin:(ev)=>{
             ev.preventDefault();
-            console.log('signin')
+
             document.querySelector('.preloader-wrapper').classList.add('active');
 
 
@@ -63,7 +62,7 @@ const app={
             let header = new Headers();
             header.append("Content-Type", "application/json")
 
-            console.log(JSON.stringify(body))
+
 
             let req = new Request(uri, {
                 headers: header,
@@ -73,14 +72,14 @@ const app={
             });
 
             if(email!=""&&password!=""){
-                console.log('empty')
+
 
                 fetch(req)
                     .then(response => response.json())
                     .then(data=>{
-                        console.log(data.data.token)
+
                         app.token=data.data.token;
-                        console.log(app.token);
+
     
     
                         sessionStorage.setItem("token",JSON.stringify(app.token));
@@ -101,7 +100,7 @@ const app={
                         app.showpeople();
                     })
                     .catch(err=>{
-                        console.error(err);
+
                         document.querySelector('.preloader-wrapper').classList.remove('active');
                         alert('Your email or password is incorrect. Please check and try again')
     
@@ -115,11 +114,11 @@ const app={
         },
         cancel: (ev) => { 
             ev.preventDefault();
-            console.log('cancel')
+
         },
         addPerson: (ev) => {
              ev.preventDefault();
-            console.log('person')
+
 
             let name = document.getElementById('personName').value;
             let dob = document.getElementById('date').value;
@@ -139,7 +138,7 @@ const app={
             header.append("Content-Type", "application/json")
             header.append("Authorization","Bearer "+app.token);
             
-            // console.log(JSON.stringify(body))
+
             
             let req = new Request(uri, {
                 headers: header,
@@ -152,7 +151,7 @@ const app={
                 fetch(req)
                     .then(response => response.json())
                     .then(data => {
-                        console.log(data)
+
                         document.getElementById("addp").reset();
                         app.modals[0].close();
                         app.showpeople();
@@ -166,7 +165,7 @@ const app={
             },
         signup: (ev) => {
              ev.preventDefault();
-            console.log('signup')
+
 
             document.querySelector('.second').classList.add('active');
 
@@ -176,7 +175,7 @@ const app={
             let password = document.getElementById('password').value;
 
 
-            console.log(firstName,lastName,email,password)
+
 
             let uri ="https://giftr.mad9124.rocks/auth/users";
             let body={
@@ -188,7 +187,7 @@ const app={
             let header = new Headers();
             header.append("Content-Type","application/json")
 
-            console.log(JSON.stringify(body))
+
 
             let req = new Request(uri,{
                 headers:header,
@@ -201,10 +200,10 @@ const app={
                 fetch(req)
                 .then(response=>response.json())
                 .then(
-                    data=>{console.log(data)
+                    data=>{
 
                         if(data.errors){
-                            console.log(data.errors)
+
                             alert(data.errors[0].detail) 
 
                         }else{
@@ -217,7 +216,7 @@ const app={
 
                     })
                 .catch(err=>{
-                    console.error(err)
+
                     document.querySelector('.second').classList.remove('active');
                     alert("Email is already registered. Please login or try another email")
                 })
@@ -235,8 +234,8 @@ const app={
                 let header = new Headers();
                 header.append("Content-Type", "application/json")
                 header.append("Authorization", "Bearer "+ app.token)
-                console.log(app.token)
-                // console.log(JSON.stringify(body))
+
+
 
                 let req = new Request(uri, {
                     headers: header,
@@ -251,13 +250,13 @@ const app={
                             app.peoplelist=[];
                             app.peoplelist=data.data;
 
-                            console.log(data.data)
+
 
                             app.peoplelist.sort(function (a, b) { return new Date(a.birthDate.slice(5, 10)) - new Date(b.birthDate.slice(5, 10))})
 
 
                             
-                            console.log(data.data)
+
                             let item = document.querySelector('.collection-item')
                             if(item){
                                 let list = document.querySelectorAll('.collection-item');
@@ -268,7 +267,7 @@ const app={
                             }
 
                             let ul = document.querySelector('#peoplelist');
-                                console.log(app.peoplelist)
+
 
 
                             if(app.peoplelist.length==0){
@@ -340,9 +339,9 @@ const app={
 
                 let target = ev.target;
                 let clicked = target.closest("[data-id]")
-                console.log(clicked);
+
                 let attribute = clicked.getAttribute('data-id')
-                console.log(attribute)
+
 
 
                 let uri = "https://giftr.mad9124.rocks/api/people/"+attribute;
@@ -351,7 +350,7 @@ const app={
                 header.append("Content-Type", "application/json")
                 header.append("Authorization", "Bearer " + app.token)
 
-                // console.log(JSON.stringify(body))
+
 
                 let req = new Request(uri, {
                     headers: header,
@@ -363,7 +362,7 @@ const app={
                     .then(response => response.json())
                     .then(
                         data => {
-                            console.log(data)
+
                             app.showpeople();
                         })
 
@@ -386,7 +385,7 @@ const app={
 
                 app.time =  setInterval(()=>{
                     let picker = app.datepickers[0].isOpen
-                    console.log(app.datepickers[0].isOpen)
+
                     if(picker==true){
                         document.querySelector('#modal1').classList.add('hiet')
                     }else{
