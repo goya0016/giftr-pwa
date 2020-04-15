@@ -39,7 +39,7 @@ const app={
             document.getElementById('signInbtn').addEventListener('click',app.signin);
             document.getElementById('cancel').addEventListener('click',app.cancel);
             document.getElementById('addPerson').addEventListener('click',app.addPerson);
-            document.getElementById('signup').addEventListener('click',app.signup);
+            document.getElementById('signupp').addEventListener('click',app.signup);
             document.getElementById('logout').addEventListener('click',app.logout);
             document.querySelector('.fixed-action-btn').addEventListener('click',app.timer);
         },
@@ -165,7 +165,7 @@ const app={
             },
         signup: (ev) => {
              ev.preventDefault();
-
+            ev.stopImmediatePropagation();
 
             document.querySelector('.second').classList.add('active');
 
@@ -303,7 +303,7 @@ const app={
                                     i.setAttribute('class',"material-icons")
                                     del.setAttribute('class','secondary-content')
 
-                                    
+
                                     del.addEventListener('click',app.deletePerson)
                                     // let part = element.birthDate.split('T') part[0]=2020-04-03
                                     let date = new Date(element.birthDate)
