@@ -22,6 +22,9 @@
 #logout.scale-out.scale-transition.scale-in{
     position: relative;;
 }
+#modal1.hiet{
+    height:500px
+}
 @media screen and(min-width:800px){
     .preloader-wrapper.medium.active{
     position: absolute;

@@ -1,7 +1,9 @@
-    const app={
+const app={
         peoplelist:[],
         token:null,
         modals:null,
+        datepickers:null,
+        time:null,
         init:()=>{
             let modal = document.querySelectorAll('.modal');
             let modoptions = {
@@ -16,9 +18,23 @@
             app.modals=modals;
 
             let datepicker = document.querySelectorAll('.datepicker');
-            let datepickers = M.Datepicker.init(datepicker,modoptions);
-
+            let datepickers = M.Datepicker.init(datepicker, { autoClose:true});
+            app.datepickers= datepickers;
+            app.verify();
             app.addEventListeners();
+        },
+        verify:()=>{
+           let token= JSON.parse(sessionStorage.getItem("token"))
+           app.token= token;
+            if(!token){
+
+            }else{
+
+                document.getElementById('logout').classList.add('scale-in');
+                document.getElementById('login').classList.add('scale-out', "scale-transition");
+                document.getElementById('register').classList.add('scale-out', "scale-transition");
+                app.showpeople();
+            }
         },
         addEventListeners:()=>{
             document.getElementById('signInbtn').addEventListener('click',app.signin);
@@ -26,6 +42,7 @@
             document.getElementById('addPerson').addEventListener('click',app.addPerson);
             document.getElementById('signup').addEventListener('click',app.signup);
             document.getElementById('logout').addEventListener('click',app.logout);
+            document.querySelector('.fixed-action-btn').addEventListener('click',app.timer);
         },
         signin:(ev)=>{
             ev.preventDefault();
@@ -69,18 +86,18 @@
                         sessionStorage.setItem("token",JSON.stringify(app.token));
                         document.querySelector('.preloader-wrapper').classList.remove('active');
 
-                        document.getElementById("signin").reset();
-
+                        
                         app.modals[1].close();
-
-                        document.querySelector('.scale-out').classList.add('scale-in');
-
+                        
+                        document.querySelector('.fixed-action-btn').classList.add('scale-in');
+                        
                         let li = document.getElementById("beforelogin")
                         li.parentNode.removeChild(li)
-
+                        
                         document.getElementById('logout').classList.add('scale-in');
                         document.getElementById('login').classList.add('scale-out',"scale-transition");
                         document.getElementById('register').classList.add('scale-out',"scale-transition");
+                        document.getElementById("signin").reset();
                         app.showpeople();
                     })
                     .catch(err=>{
@@ -104,41 +121,47 @@
              ev.preventDefault();
             console.log('person')
 
-
             let name = document.getElementById('personName').value;
             let dob = document.getElementById('date').value;
+            clearInterval(app.time);
 
-
+            
+            
             let timestamp = Date.parse(dob);
             let now = Date.now()
-
-
+            
+            
             let uri = "https://giftr.mad9124.rocks/api/people";
-
+            
             let person = { id: now, name: name, birthDate: timestamp };
-
+            
             let header = new Headers();
             header.append("Content-Type", "application/json")
             header.append("Authorization","Bearer "+app.token);
-
+            
             // console.log(JSON.stringify(body))
-
+            
             let req = new Request(uri, {
                 headers: header,
                 body: JSON.stringify(person),
                 mode: 'cors',
                 method: 'POST'
             });
+            
+            if(name!=""&&dob!=""){
+                fetch(req)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        document.getElementById("addp").reset();
+                        app.modals[0].close();
+                        app.showpeople();
+                    })
+                    .catch(console.error)
 
-            fetch(req)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    document.getElementById("addp").reset();
-                    app.modals[0].close();
-                    app.showpeople();
-                })
-                .catch(console.error)
+            }else{
+                alert("One of the required fields is empty")
+            }
 
             },
         signup: (ev) => {
@@ -211,8 +234,8 @@
 
                 let header = new Headers();
                 header.append("Content-Type", "application/json")
-                header.append("Authorization", "Bearer "+app.token)
-
+                header.append("Authorization", "Bearer "+ app.token)
+                console.log(app.token)
                 // console.log(JSON.stringify(body))
 
                 let req = new Request(uri, {
@@ -226,7 +249,7 @@
                     .then(
                         data => {
                             app.peoplelist=[];
-                            app.peoplelist=data.data
+                            app.peoplelist=data.data;
 
                             console.log(data.data)
 
@@ -248,50 +271,63 @@
                                 console.log(app.peoplelist)
 
 
-
-                            app.peoplelist.forEach(element => {
-
+                            if(app.peoplelist.length==0){
                                 let li = document.createElement('li')
                                 let div = document.createElement('div')
-                                let name = document.createElement('span');
-                                let dob = document.createElement('a');
-                                let del = document.createElement('a');
-                                let i = document.createElement('i');
-                                
-                                li.setAttribute('id',element._id)
-                                li.setAttribute('class','collection-item');
-                                li.addEventListener('click',app.retrieveID)
-                                div.setAttribute('id','lidiv')
+                                let a  = document.createElement('a')
 
-                                name.setAttribute('id','pName')
-                                dob.setAttribute('id','dob')
+                                a.textContent="You do not have any people saved please click the add button to add person."
+                                li.setAttribute('class', 'collection-item');
 
-                                i.setAttribute('class',"material-icons")
-                                del.setAttribute('class','secondary-content')
-                                del.addEventListener('click',app.deletePerson)
-                                // let part = element.birthDate.split('T') part[0]=2020-04-03
-                                let date = new Date(element.birthDate)
-                                let birthDate = date.getUTCDate();
-                                let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', "Dec"]
-                                let month = months[date.getUTCMonth()]
-                                
-                                
-                                
-                                
-                                name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
-                                dob.textContent = birthDate + " " + month+" ";
-                                i.textContent='delete';
-                                
                                 ul.appendChild(li);
                                 li.appendChild(div)
-                                div.appendChild(dob);
-                                dob.insertAdjacentElement('afterend',name)
-                                name.insertAdjacentElement('afterend',del);
-                                del.appendChild(i)
-                                
+                                div.appendChild(a);
+                            }else{
 
-
-                            });
+                                app.peoplelist.forEach(element => {
+    
+                                    let li = document.createElement('li')
+                                    let div = document.createElement('div')
+                                    let name = document.createElement('span');
+                                    let dob = document.createElement('a');
+                                    let del = document.createElement('a');
+                                    let i = document.createElement('i');
+                                    
+                                    li.setAttribute('data-id',element._id)
+                                    li.setAttribute('class','collection-item');
+                                    li.addEventListener('click',app.retrieveID)
+                                    div.setAttribute('id','lidiv')
+    
+                                    name.setAttribute('id','pName')
+                                    dob.setAttribute('id','dob')
+    
+                                    i.setAttribute('class',"material-icons")
+                                    del.setAttribute('class','secondary-content')
+                                    del.addEventListener('click',app.deletePerson)
+                                    // let part = element.birthDate.split('T') part[0]=2020-04-03
+                                    let date = new Date(element.birthDate)
+                                    let birthDate = date.getUTCDate();
+                                    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', "Dec"]
+                                    let month = months[date.getUTCMonth()]
+                                    
+                                    
+                                    
+                                    
+                                    name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
+                                    dob.textContent = birthDate + " " + month+" ";
+                                    i.textContent='delete';
+                                    
+                                    ul.appendChild(li);
+                                    li.appendChild(div)
+                                    div.appendChild(dob);
+                                    dob.insertAdjacentElement('afterend',name)
+                                    name.insertAdjacentElement('afterend',del);
+                                    del.appendChild(i)
+                                    
+    
+    
+                                });
+                            }
 
                         })
                     .catch(console.error)
@@ -300,16 +336,65 @@
             deletePerson:(ev)=>{
                 ev.stopImmediatePropagation();
                 ev.preventDefault();
+
+
+                let target = ev.target;
+                let clicked = target.closest("[data-id]")
+                console.log(clicked);
+                let attribute = clicked.getAttribute('data-id')
+                console.log(attribute)
+
+
+                let uri = "https://giftr.mad9124.rocks/api/people/"+attribute;
+
+                let header = new Headers();
+                header.append("Content-Type", "application/json")
+                header.append("Authorization", "Bearer " + app.token)
+
+                // console.log(JSON.stringify(body))
+
+                let req = new Request(uri, {
+                    headers: header,
+                    mode: 'cors',
+                    method: 'DELETE'
+                });
+
+                fetch(req)
+                    .then(response => response.json())
+                    .then(
+                        data => {
+                            console.log(data)
+                            app.showpeople();
+                        })
+
             },
             retrieveID:(ev)=>{
                 let target = ev.target;
-                // let clicked = target.close
+                let clicked = target.closest("[data-id]");
+                let attribute = clicked.getAttribute('data-id');
+                sessionStorage.setItem('personID',JSON.stringify(attribute));
+                window.location.href="./gifts.html"
             },
             logout:(ev)=>{
             ev.preventDefault();
             sessionStorage.removeItem("token");
+            sessionStorage.removeItem("personID");
             
             location.reload();
+            },
+            timer:()=>{
+
+                app.time =  setInterval(()=>{
+                    let picker = app.datepickers[0].isOpen
+                    console.log(app.datepickers[0].isOpen)
+                    if(picker==true){
+                        document.querySelector('#modal1').classList.add('hiet')
+                    }else{
+                        document.querySelector('#modal1').classList.remove('hiet')
+                    }
+                }, 500)
+              
+                
             }
     }
     

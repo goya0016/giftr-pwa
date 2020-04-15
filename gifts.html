@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giftr-Pwa</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <link href="css/gifts.css">
+</head>
+<body>
+
+<nav class="teal">
+    <div class="nav-wrapper">
+        <!-- <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
+        <a href="#" class="brand-logo left">Giftr</a>
+        <ul id="nav-mobile" class="right">
+
+            <li><a href="" class="" data-target="" id="logout">Logout</a></li>
+            <!-- <li><a href="" class="">Logout</a></li> -->
+        </ul>
+    </div>
+</nav>
+
+<ul class="collection with-header" id="peoplelist">
+    <li class="collection-header" id="ulheader">
+    <div> <h4><a><i class="material-icons" id="backbtn">arrow_back</i></a>Gifts</h4></div>
+    </li>
+    <li class="collection-item" id="beforelogin">
+        <div id="lidiv">
+            You are currently not logged in into the system. Please login to continue.
+        </div>
+    </li>
+
+</ul>
+
+<div class="fixed-action-btn ">
+    <a class="btn-floating btn-large teal modal-trigger" id="addbtn" data-target="modal1">
+        <i class="large material-icons ">add</i>
+    </a>
+</div>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <form id="">
+
+            <div class="input-field col s6">
+                <label for="itemName">Name</label>
+                <input id="itemName" type="text" class="validate">
+            </div>
+            <div class="input-field col s6">
+                <label for="price">Price</label>
+                <input id="peice" type="number" class="">
+            </div>
+            <div class="input-field col s6">
+                <label for="storeName">Store Name</label>
+                <input id="storeName" type="text" class="">
+            </div>
+            <div class="input-field col s6">
+                <label for="storeUrl">Store Url</label>
+                <input id="storeUrl" type="url" class="">
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn" id="cancel">Cancel</a> <!-- modal-close-->
+        <a href="#!" class="waves-effect waves-green btn" id="addPerson">Add</a><!-- modal-close-->
+    </div>
+</div>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src = "./js/gifts.js"></script>
+</body>
+</html>
