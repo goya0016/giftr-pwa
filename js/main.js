@@ -4,14 +4,14 @@ const app={
         modals:null,
         datepickers:null,
         time:null,
-        SW:null,
         init:()=>{
-            if ('serviceWorker' in navigator) {
-               // app.initServiceWorker().catch(console.error);
-                let swRegistration =navigator.serviceWorker.register('/sw.js')
-                swRegistration.then(reg => console.log(reg) ) .catch(  err => console.log(err) )
+            if('serviceWorker'in navigator){
+                let swRegistration = navigator.serviceWorker.register('./sw.js',
+                    {
+                        updateViaCache: 'none',
+                        scope: '/',
+                    });
             }
-
             let modal = document.querySelectorAll('.modal');
             let modoptions = {
                 dismissible: true,
