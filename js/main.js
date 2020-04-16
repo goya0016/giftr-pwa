@@ -282,59 +282,61 @@ const app={
                                 li.appendChild(div)
                                 div.appendChild(a);
                             }else{
-
-                                data.data.forEach(element => {
-    
-                                    let li = document.createElement('li')
-                                    let div = document.createElement('div')
-                                    let name = document.createElement('span');
-                                    let dob = document.createElement('a');
-                                    let del = document.createElement('a');
-                                    let i = document.createElement('i');
-                                    
-                                    li.setAttribute('data-id',element._id)
-                                    li.setAttribute('class','collection-item');
-                                    li.addEventListener('click',app.retrieveID)
-                                    div.setAttribute('id','lidiv')
-    
-                                    name.setAttribute('id','pName')
-                                    dob.setAttribute('id','dob')
-                                    dob.setAttribute('class','black-text')
-                                    i.setAttribute('class',"material-icons")
-                                    del.setAttribute('class','secondary-content')
-
-
-                                    del.addEventListener('click',app.deletePerson)
-                                    // let part = element.birthDate.split('T') part[0]=2020-04-03
-                                    let date = new Date(element.birthDate)
-
-
-                                    if (Date.parse(date)<Date.now()){
-                                        li.classList.add('disabled')
-                                    }
-
-
-                                    let birthDate = date.getUTCDate();
-                                    let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', "Dec"]
-                                    let month = months[date.getUTCMonth()]
-                                    
-                                    
-                                    
-                                    
-                                    name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
-                                    dob.textContent = birthDate + " " + month+" ";
-                                    i.textContent='delete';
-                                    
-                                    ul.appendChild(li);
-                                    li.appendChild(div)
-                                    div.appendChild(dob);
-                                    dob.insertAdjacentElement('afterend',name)
-                                    name.insertAdjacentElement('afterend',del);
-                                    del.appendChild(i)
-                                    
+                                setTimeout(()=>{
+                                    data.data.forEach(element => {
+        
+                                        let li = document.createElement('li')
+                                        let div = document.createElement('div')
+                                        let name = document.createElement('span');
+                                        let dob = document.createElement('a');
+                                        let del = document.createElement('a');
+                                        let i = document.createElement('i');
+                                        
+                                        li.setAttribute('data-id',element._id)
+                                        li.setAttribute('class','collection-item');
+                                        li.addEventListener('click',app.retrieveID)
+                                        div.setAttribute('id','lidiv')
+        
+                                        name.setAttribute('id','pName')
+                                        dob.setAttribute('id','dob')
+                                        dob.setAttribute('class','black-text')
+                                        i.setAttribute('class',"material-icons")
+                                        del.setAttribute('class','secondary-content')
     
     
-                                });
+                                        del.addEventListener('click',app.deletePerson)
+                                        // let part = element.birthDate.split('T') part[0]=2020-04-03
+                                        let date = new Date(element.birthDate)
+    
+    
+                                        if (Date.parse(date)<Date.now()){
+                                            li.classList.add('disabled')
+                                        }
+    
+    
+                                        let birthDate = date.getUTCDate();
+                                        let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', "Dec"]
+                                        let month = months[date.getUTCMonth()]
+                                        
+                                        
+                                        
+                                        
+                                        name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
+                                        dob.textContent = birthDate + " " + month+" ";
+                                        i.textContent='delete';
+                                        
+                                        ul.appendChild(li);
+                                        li.appendChild(div)
+                                        div.appendChild(dob);
+                                        dob.insertAdjacentElement('afterend',name)
+                                        name.insertAdjacentElement('afterend',del);
+                                        del.appendChild(i)
+                                        
+        
+        
+                                    });
+
+                                },2000)
                             }
 
                         })
