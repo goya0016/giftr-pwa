@@ -248,11 +248,11 @@ const app={
                     .then(
                         data => {
                             app.peoplelist=[];
-                            app.peoplelist=data.data;
+                            // app.peoplelist=;
 
 
 
-                            app.peoplelist.sort(function (a, b) { return new Date(a.birthDate.slice(5, 10)) - new Date(b.birthDate.slice(5, 10))})
+                            data.data.sort(function (a, b) { return new Date(a.birthDate.slice(5, 10)) - new Date(b.birthDate.slice(5, 10))})
 
 
                             
@@ -270,7 +270,7 @@ const app={
 
 
 
-                            if(app.peoplelist.length==0){
+                            if (data.data.length==0){
                                 let li = document.createElement('li')
                                 let div = document.createElement('div')
                                 let a  = document.createElement('a')
@@ -283,7 +283,7 @@ const app={
                                 div.appendChild(a);
                             }else{
 
-                                app.peoplelist.forEach(element => {
+                                data.data.forEach(element => {
     
                                     let li = document.createElement('li')
                                     let div = document.createElement('div')
