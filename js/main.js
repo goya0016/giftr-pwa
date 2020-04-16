@@ -252,7 +252,7 @@ const app={
 
 
 
-                            data.data.sort(function (a, b) { return new Date(a.birthDate.slice(5, 10)) - new Date(b.birthDate.slice(5, 10))})
+                            data.data.sort(function (a, b) { return new Date(a.birthDate) - new Date(b.birthDate)})
 
 
                             

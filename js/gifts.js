@@ -172,6 +172,8 @@ const gift={
 
                             name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
                             price.textContent = "$ "+element.price+"   ";
+
+                            if (element.store) { } else if (element.store.name) { } else if (element.store.name) { }
                             strname.textContent=    element.store.name;
 
 
