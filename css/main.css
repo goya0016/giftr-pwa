@@ -17,10 +17,10 @@
     text-align: center;
 }
 #logout.scale-out.scale-transition{
-    position: absolute;;
+    position: absolute;
 }
 #logout.scale-out.scale-transition.scale-in{
-    position: relative;;
+    position: relative;
 }
 #modal1.hiet{
     height:500px

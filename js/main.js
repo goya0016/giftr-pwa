@@ -4,7 +4,12 @@ const app={
         modals:null,
         datepickers:null,
         time:null,
+        SW:null,
         init:()=>{
+            if ('serviceWorker' in navigator) {
+                app.initServiceWorker().catch(console.error);
+            }
+
             let modal = document.querySelectorAll('.modal');
             let modoptions = {
                 dismissible: true,
@@ -21,6 +26,16 @@ const app={
             app.datepickers= datepickers;
             app.verify();
             app.addEventListeners();
+        },
+        initServiceWorker:async ()=>{
+            let swRegistration = await navigator.serviceWorker.register('/sw.js', {
+                updateViaCache: 'none',
+                scope: '/',
+            });
+            app.SW =
+                swRegistration.installing ||
+                swRegistration.waiting ||
+                swRegistration.active;
         },
         verify:()=>{
            let token= JSON.parse(sessionStorage.getItem("token"))

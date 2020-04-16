@@ -60,7 +60,7 @@ const gift={
         console.log(storeUrl.length)
 
 
-        let body = { id: Date.now(), name: name, price: price, store: { name: storeName, storeUrl: url } }
+        let body = { id: Date.now(), name: name, price: price, store: { name: storeName, productURL: url } }
 
         let header = new Headers();
         header.append("Content-Type", "application/json")
@@ -177,19 +177,21 @@ const gift={
                                  if (element.store.name) { 
                                 let strname = document.createElement('span');
                                 let url = document.createElement('a');
-                                strname.textContent=    element.store.name;
+                                strname.textContent = element.store.name[0].toLocaleUpperCase() + element.store.name.slice(1)+"  ";
                                 
                                 if (element.store.productURL){
 
                                          url.textContent = element.store.productURL;
 
-                                         
+
                                     li.appendChild(div)
                                     div.appendChild(name);
-                                    name.insertAdjacentElement("afterend", price)
-                                    price.insertAdjacentElement('afterend', strname);
-                                    strname.insertAdjacentElement('afterend', url);
-                                    url.insertAdjacentElement('afterend', del);
+                                    name.insertAdjacentElement("afterend", price);
+
+                                    price.insertAdjacentElement('afterend', url);
+                                    strname.appendChild(url);
+
+                                    strname.insertAdjacentElement('afterend', del);
                                     del.appendChild(i);
                                     ul.appendChild(li);
                                 }
