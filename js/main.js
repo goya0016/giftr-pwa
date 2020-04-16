@@ -252,7 +252,7 @@ const app={
 
 
 
-                            data.data.sort(function (a, b) { return new Date(a.birthDate) - new Date(b.birthDate)})
+                            data.data.sort(function (a, b) { return new Date(a.birthDate.slice(5, 10)) - new Date(b.birthDate.slice(5, 10))})
 
 
                             
@@ -282,6 +282,7 @@ const app={
                                 li.appendChild(div)
                                 div.appendChild(a);
                             }else{
+
                                 setTimeout(()=>{
                                     data.data.forEach(element => {
         
@@ -336,7 +337,7 @@ const app={
         
                                     });
 
-                                },2000)
+                                },1000)
                             }
 
                         })

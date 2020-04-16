@@ -150,8 +150,7 @@ const gift={
                             // let div2 = document.createElement('div')
                             let name = document.createElement('h6');
                             let price = document.createElement('a');
-                            let strname = document.createElement('span');
-                            // let url = document.createElement('a');
+                           
 
                             let del = document.createElement('a');
                             let i = document.createElement('i');
@@ -162,30 +161,59 @@ const gift={
                             div.setAttribute('id', 'lidiv')
 
                             name.setAttribute('id', 'gName')
-                            strname.setAttribute('class','center-align')
+                            // strname.setAttribute('class','center-align')
                             price.setAttribute('class', 'black-text')
                             i.setAttribute('class', "material-icons")
                             del.setAttribute('class', 'secondary-content')
                             del.addEventListener('click',gift.deleteGift);
                             // del.addEventListener('click', app.deletePerson)
                             // let part = element.birthDate.split('T') part[0]=2020-04-03
-
+                            
                             name.textContent = element.name[0].toLocaleUpperCase() + element.name.slice(1);
                             price.textContent = "$ "+element.price+"   ";
-
-                            if (element.store) { } else if (element.store.name) { } else if (element.store.name) { }
-                            strname.textContent=    element.store.name;
-
-
                             i.textContent = 'delete';
 
-                            li.appendChild(div)
-                            div.appendChild(name);
-                            name.insertAdjacentElement("afterend",price)
-                            price.insertAdjacentElement('afterend', strname);
-                            strname.insertAdjacentElement("afterend",del)
-                            del.appendChild(i);
-                            ul.appendChild(li);
+
+                                 if (element.store.name) { 
+                                let strname = document.createElement('span');
+                                let url = document.createElement('a');
+                                strname.textContent=    element.store.name;
+                                
+                                if (element.store.productURL){
+
+                                         url.textContent = element.store.productURL;
+
+                                         
+                                    li.appendChild(div)
+                                    div.appendChild(name);
+                                    name.insertAdjacentElement("afterend", price)
+                                    price.insertAdjacentElement('afterend', strname);
+                                    strname.insertAdjacentElement('afterend', url);
+                                    url.insertAdjacentElement('afterend', del);
+                                    del.appendChild(i);
+                                    ul.appendChild(li);
+                                }
+                                     li.appendChild(div)
+                                     div.appendChild(name);
+                                     name.insertAdjacentElement("afterend", price)
+                                     price.insertAdjacentElement('afterend', strname);
+                                     strname.insertAdjacentElement('afterend', del);
+                                     del.appendChild(i);
+                                     ul.appendChild(li);
+                                }else{
+
+                                 li.appendChild(div)
+                                 div.appendChild(name);
+                                 name.insertAdjacentElement("afterend",price)
+                                 price.insertAdjacentElement("afterend",del)
+                                 del.appendChild(i);
+                                 ul.appendChild(li);
+                                }
+
+                             
+
+
+
 
                         })
                     }
