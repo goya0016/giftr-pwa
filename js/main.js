@@ -7,7 +7,9 @@ const app={
         SW:null,
         init:()=>{
             if ('serviceWorker' in navigator) {
-                app.initServiceWorker().catch(console.error);
+               // app.initServiceWorker().catch(console.error);
+                let swRegistration =navigator.serviceWorker.register('/sw.js')
+                swRegistration.then(reg => console.log(reg) ) .catch(  err => console.log(err) )
             }
 
             let modal = document.querySelectorAll('.modal');
@@ -27,16 +29,16 @@ const app={
             app.verify();
             app.addEventListeners();
         },
-        initServiceWorker:async ()=>{
-            let swRegistration = await navigator.serviceWorker.register('/sw.js', {
-                updateViaCache: 'none',
-                scope: '/',
-            });
-            app.SW =
-                swRegistration.installing ||
-                swRegistration.waiting ||
-                swRegistration.active;
-        },
+        // initServiceWorker:async ()=>{
+        //     let swRegistration = await navigator.serviceWorker.register('/sw.js', {
+        //         updateViaCache: 'none',
+        //         scope: '/',
+        //     });
+        //     app.SW =
+        //         swRegistration.installing ||
+        //         swRegistration.waiting ||
+        //         swRegistration.active;
+        // },
         verify:()=>{
            let token= JSON.parse(sessionStorage.getItem("token"))
            app.token= token;
